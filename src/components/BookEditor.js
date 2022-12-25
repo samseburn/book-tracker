@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BookDispatchContext } from '../App';
 
-const BookEditor = props => {
-	const { originData } = props;
-	const { onCreate } = useContext(BookDispatchContext);
+const BookEditor = (props) => {
+	const { originData, isEdit } = props;
+	const { onCreate, onEdit } = useContext(BookDispatchContext);
 	const navigate = useNavigate();
+	const { bookId } = useParams();
 	const resetData = {
 		title: '',
 		author: '',
@@ -16,20 +17,44 @@ const BookEditor = props => {
 	const [book, setBook] = useState(resetData);
 
 	// 데이터 생성 하기
-	const handleContentChange = e => {
+	const handleContentChange = (e) => {
 		setBook({ ...book, [e.target.name]: e.target.value });
 		console.log(book);
 	};
 
-	const handleSubmit = () => {
-		onCreate(book);
-		setBook(resetData);
+	const handleSubmit = (e) => {
+		if (
+			window.confirm(
+				isEdit
+					? '독서 정보를 수정하시겠습니까?'
+					: '새로운 독서 정보를 만드시겠습니까?',
+			)
+		) {
+			if (!isEdit) {
+				onCreate(book);
+			} else {
+				onEdit(bookId, book);
+			}
+			navigate('/', { replace: true });
+		}
 	};
+
+	useEffect(() => {
+		if (isEdit) {
+			setBook({
+				title: originData.title,
+				author: originData.author,
+				publisher: originData.publisher,
+				year: originData.year,
+				date: originData.date,
+			});
+		}
+	}, [isEdit, originData]);
 
 	return (
 		<div className="BookEditor">
 			<section>
-				<h1>책 정보 수정하기</h1>
+				<h1>{isEdit ? '책 정보 수정하기' : '새로운 책 등록하기'}</h1>
 				<div style={{ display: 'flex', flexDirection: 'column' }}>
 					<label>
 						제목:
