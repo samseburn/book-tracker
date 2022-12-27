@@ -11,6 +11,8 @@ import {
 import { db } from './utils/firebase';
 import './App.css';
 
+import { Container } from './common/Container';
+
 import Root from './pages/Root';
 import Home from './pages/Home';
 import New from './pages/New';
@@ -26,10 +28,10 @@ const router = createBrowserRouter([
 		element: <Root />,
 		errorElement: <div>Page Not Found</div>,
 		children: [
-			{ index: true, element: <Home /> },
-			{ path: '/new', element: <New /> },
-			{ path: '/edit/:bookId', element: <Edit /> },
-			{ path: '/book/:bookId', element: <Book /> },
+			{ index: true, element: <Container content={<Home />} /> },
+			{ path: '/new', element: <Container content={<New />} /> },
+			{ path: '/edit/:bookId', element: <Container content={<Edit />} /> },
+			{ path: '/book/:bookId', element: <Container content={<Book />} /> },
 		],
 	},
 ]);
@@ -53,12 +55,10 @@ function App() {
 	const getBooks = async () => {
 		const data = await getDocs(bookCollection);
 		setBookData(data.docs.map((doc) => ({ ...doc.data(), docID: doc.id })));
-		// console.log(bookData);
 	};
 
 	useEffect(() => {
 		getBooks();
-		console.log(bookData);
 	}, [bookData.length]);
 
 	// CREATE
@@ -69,6 +69,8 @@ function App() {
 			publisher: book.publisher,
 			year: book.year,
 			date: book.date,
+			comment: book.comment,
+			review: book.review,
 		};
 
 		await addDoc(bookCollection, {
@@ -77,6 +79,8 @@ function App() {
 			publisher: newData.publisher,
 			year: newData.year,
 			date: newData.date,
+			comment: book.comment,
+			review: book.review,
 		});
 
 		setBookData([...bookData, newData]);
@@ -96,9 +100,10 @@ function App() {
 			publisher: book.publisher,
 			year: book.year,
 			date: book.date,
+			comment: book.comment,
+			review: book.review,
 		};
-		console.log(targetId);
-		console.log(book);
+
 		await updateDoc(doc(bookCollection, targetId), updateData);
 		getBooks();
 	};
