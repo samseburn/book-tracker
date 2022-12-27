@@ -1,0 +1,16 @@
+.BookEditor {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.BookEditor section {
+	margin-top: -50px;
+	width: 50%;
+	min-width: 500px;
+	border: 1px solid black;
+	background-color: snow;
+	padding: 20px;
+}
