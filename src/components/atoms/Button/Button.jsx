@@ -1,44 +1,65 @@
 import styled from 'styled-components';
-import { COLORS, FONT_SIZE, MEDIA } from '../../../styles/index';
+import { COLORS, FONT_SIZE, FONT_WEIGHT, MEDIA } from '../../../styles/index';
 
-const Button = ({ type, children, ...props }) => {
+// .btn-primary {
+//   @extend %btn-base;
+//   background-color: $blue;
+//   color: $white;
+//   transition: background-color 200ms ease-in-out;
+
+//   &:not(:disabled):hover {
+//     // :not(선택자) -> 괄호 안 선택자 제외하고 선택
+//     background-color: $blue-dark;
+//   }
+// }
+
+// primary | secondary
+// - color
+// - transition
+// - background-color
+
+const Button = ({ btnType, children, ...props }) => {
 	return (
-		<StyledButton type={type} {...props}>
+		<StyledButton btnType={btnType} {...props}>
 			{children}
 		</StyledButton>
 	);
 };
 
 const StyledButton = styled.button`
-	width: 100%;
-	padding: 10px 20px;
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	${({ type }) => `
-    background: ${type === 'main' ? COLORS.white : COLORS.red};
-    color: ${type === 'main' ? COLORS.primary : COLORS.black}; 
-  `}
-	border: 1px solid ${COLORS.primary};
-	border-radius: 20px;
-	font-size: ${FONT_SIZE.small};
-	transition: all 200ms ease-in-out;
+
+	width: 100%;
+	padding: 0 8px;
+	border-radius: 4px;
+	font-weight: ${FONT_WEIGHT.bold};
+	transition: background-color 200ms ease-in-out;
 	cursor: pointer;
+	border: 1px solid ${COLORS.pink};
+	font-size: ${FONT_SIZE.small};
+	height: 32px;
+
+	${({ btnType }) => `
+    background: ${btnType === 'primary' ? COLORS.pink : COLORS.background};
+    color: ${btnType === 'primary' ? COLORS.white : COLORS.pink}; 
+  `}
 
 	@media (hover: hover) {
 		:hover {
-			color: ${COLORS.primary};
-			background-color: ${COLORS.background};
+			color: ${COLORS.white};
+			background-color: ${COLORS.pink};
 		}
 
 		:active {
-			color: ${COLORS.primary};
-			background-color: ${COLORS.background};
+			color: ${COLORS.white};
+			background-color: ${COLORS.pink};
 		}
 	}
 
 	@media ${MEDIA.md} {
-		height: 56px;
+		height: 48px;
 		font-size: ${FONT_SIZE.medium};
 	}
 `;

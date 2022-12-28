@@ -10,6 +10,10 @@ export const COLORS = Object.freeze({
 
 	green: '#22c58b',
 	red: '#f86d7d',
+
+	darkPink: '#FF597B',
+	pink: '#FF8E9E',
+	lightPink: '#F985D0',
 });
 
 // Color Pallette

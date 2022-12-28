@@ -11,7 +11,7 @@ const Input = styled.input`
 	border: 1px solid gray;
 
 	&:focus {
-		border: 1px solid rgba(0, 102, 255, 1);
+		border: 1px solid ${COLORS.primary};
 	}
 `;
 

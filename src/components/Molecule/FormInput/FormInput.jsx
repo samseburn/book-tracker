@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MEDIA } from 'styles';
 
 // Label + {Input, Textarea, ...}
 const FormInput = ({ leftChild, rightChild }) => {
@@ -12,9 +13,16 @@ const FormInput = ({ leftChild, rightChild }) => {
 
 const StyledFormInput = styled.div`
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	gap: 5px;
 	width: 100%;
-	justify-content: space-between;
-	gap: 10px;
+	margin-bottom: 10px;
+
+	@media ${MEDIA.md} {
+		width: 100%;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
 `;
 export default FormInput;
