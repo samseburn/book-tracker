@@ -1,27 +1,10 @@
 import styled from 'styled-components';
 import { COLORS, FONT_SIZE, FONT_WEIGHT, MEDIA } from '../../../styles/index';
 
-// .btn-primary {
-//   @extend %btn-base;
-//   background-color: $blue;
-//   color: $white;
-//   transition: background-color 200ms ease-in-out;
-
-//   &:not(:disabled):hover {
-//     // :not(선택자) -> 괄호 안 선택자 제외하고 선택
-//     background-color: $blue-dark;
-//   }
-// }
-
-// primary | secondary
-// - color
-// - transition
-// - background-color
-
-const Button = ({ btnType, children, ...props }) => {
+const Button = ({ btnType, text, ...props }) => {
 	return (
 		<StyledButton btnType={btnType} {...props}>
-			{children}
+			{text}
 		</StyledButton>
 	);
 };

@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BookDispatchContext } from '../../App';
+import styled from 'styled-components';
+
+import { BookDispatchContext } from 'App';
 import { Button, FormInput, Input, Label } from 'components';
-import './BookEditor.scss';
+import { MEDIA } from 'styles';
 
 const BookEditor = (props) => {
 	const { originData, isEdit } = props;
@@ -57,11 +59,11 @@ const BookEditor = (props) => {
 	}, [isEdit, originData]);
 
 	return (
-		<div className="BookEditor">
-			<form onSubmit={handleSubmit}>
-				<h1>{isEdit ? '책 정보 수정하기' : '새로운 책 등록하기'}</h1>
+		<BookEditorWrapper>
+			<Form onSubmit={handleSubmit}>
+				<Title>{isEdit ? '책 정보 수정하기' : '새로운 책 등록하기'}</Title>
 
-				<div style={{ padding: '20px 0' }}>
+				<FormInputWrapper>
 					<FormInput
 						leftChild={<Label text={'제목'} />}
 						rightChild={
@@ -149,17 +151,61 @@ const BookEditor = (props) => {
 							/>
 						}
 					/>
-				</div>
+				</FormInputWrapper>
 
-				<div className="button-group">
-					<Button onClick={() => navigate(-1)}>뒤로가기</Button>
-					<Button type={'submit'} btnType={'primary'}>
-						저장하기
-					</Button>
-				</div>
-			</form>
-		</div>
+				<ButtonWrapper>
+					<Button
+						type={'button'}
+						onClick={() => navigate(-1)}
+						text={'뒤로가기'}
+					/>
+					<Button type={'submit'} btnType={'primary'} text={'저장하기'} />
+				</ButtonWrapper>
+			</Form>
+		</BookEditorWrapper>
 	);
 };
+
+const Title = styled.h1`
+	width: 100%;
+	padding: 20px 0;
+	text-align: center;
+	font-size: 18px;
+	line-height: 1.625;
+	font-weight: 500;
+	border-bottom: 1px solid gray;
+`;
+
+const ButtonWrapper = styled.div`
+	display: flex;
+	gap: 20px;
+	margin-bottom: 20px;
+	padding: 0 20px;
+`;
+
+const FormInputWrapper = styled.div`
+	padding: 20px;
+`;
+
+const Form = styled.form`
+	width: 100%;
+	background-color: snow;
+	border: 1px solid gray;
+	border-radius: 12px;
+	overflow: hidden;
+`;
+
+const BookEditorWrapper = styled.div`
+	width: 90%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@media ${MEDIA.md} {
+		width: 75%;
+		max-width: 700px;
+	}
+`;
 
 export default BookEditor;
