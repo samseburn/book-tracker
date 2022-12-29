@@ -1,11 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BookDispatchContext } from '../../App';
-import { Button, Input, Label } from 'components';
+import { Button, FormInput, Input, Label } from 'components';
 import './BookEditor.scss';
-import FormInput from 'components/Molecule/FormInput/FormInput';
-import { type } from '@testing-library/user-event/dist/type';
-import { COLORS } from 'styles';
 
 const BookEditor = (props) => {
 	const { originData, isEdit } = props;
@@ -61,9 +58,10 @@ const BookEditor = (props) => {
 
 	return (
 		<div className="BookEditor">
-			<section>
+			<form onSubmit={handleSubmit}>
 				<h1>{isEdit ? '책 정보 수정하기' : '새로운 책 등록하기'}</h1>
-				<div style={{ display: 'flex', flexDirection: 'column' }}>
+
+				<div style={{ padding: '20px 0' }}>
 					<FormInput
 						leftChild={<Label text={'제목'} />}
 						rightChild={
@@ -98,7 +96,7 @@ const BookEditor = (props) => {
 						}
 					/>
 					<FormInput
-						leftChild={'발행년도'}
+						leftChild={<Label text={'발행년도'} />}
 						rightChild={
 							<Input
 								type={'text'}
@@ -109,7 +107,7 @@ const BookEditor = (props) => {
 						}
 					/>
 					<FormInput
-						leftChild={'한줄평'}
+						leftChild={<Label text={'한줄평'} />}
 						rightChild={
 							<Input
 								type={'text'}
@@ -120,7 +118,7 @@ const BookEditor = (props) => {
 						}
 					/>
 					<FormInput
-						leftChild={'메모'}
+						leftChild={<Label text={'메모'} />}
 						rightChild={
 							<textarea
 								style={{
@@ -140,22 +138,26 @@ const BookEditor = (props) => {
 							/>
 						}
 					/>
-
-					<div>
-						<label>등록날짜:</label>
-						<Input
-							type={'date'}
-							name={'date'}
-							value={book.date}
-							onChange={handleContentChange}
-						/>
-					</div>
+					<FormInput
+						leftChild={<Label text={'등록날짜'} />}
+						rightChild={
+							<Input
+								type={'date'}
+								name={'date'}
+								value={book.date}
+								onChange={handleContentChange}
+							/>
+						}
+					/>
 				</div>
+
 				<div className="button-group">
 					<Button onClick={() => navigate(-1)}>뒤로가기</Button>
-					<Button onClick={handleSubmit}>저장하기</Button>
+					<Button type={'submit'} btnType={'primary'}>
+						저장하기
+					</Button>
 				</div>
-			</section>
+			</form>
 		</div>
 	);
 };
