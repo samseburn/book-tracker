@@ -11,13 +11,10 @@ import {
 import { db } from './utils/firebase';
 import './App.css';
 
-import { Container } from './common/Container';
+import { Container } from 'common';
 
 import Root from './pages/Root';
-import Home from './pages/Home';
-import New from './pages/New';
-import Edit from './pages/Edit';
-import Book from './pages/Book';
+import { Home, New, Edit, Book } from './pages';
 
 export const BookDataContext = React.createContext();
 export const BookDispatchContext = React.createContext();

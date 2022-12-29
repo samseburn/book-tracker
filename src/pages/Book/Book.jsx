@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BookDataContext, BookDispatchContext } from '../App';
+import { BookDataContext, BookDispatchContext } from '../../App';
+import { Button } from '../../components/atoms/Button';
+import { BookDetail } from '../../components/BookDetail';
 
 const Book = () => {
 	const navigate = useNavigate();
@@ -35,29 +37,23 @@ const Book = () => {
 		return <div>Page Not Found</div>;
 	} else {
 		return (
-			<div>
-				여기는 책의 상세 정보를 볼 수 있는 페이지 입니다.
-				<span>ID: {bookId}</span>
-				<button onClick={goEdit}>수정하기</button>
-				<button onClick={handleRemove}>삭제하기</button>
-				<div
-					style={{
-						width: 500,
-						padding: 20,
-						border: '1px solid gray',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: 'gainsboro',
-					}}
-				>
+			<>
+				<div style={{ width: '100%', display: 'flex' }}>
+					<Button type={'main'} onClick={goEdit}>
+						수정하기
+					</Button>
+					<Button onClick={handleRemove}>삭제하기</Button>
+				</div>
+				{/* {<div className="bookDetail">
 					<p>{originData && originData.title}</p>
 					<p>{originData && originData.author}</p>
 					<p>{originData && originData.publisher}</p>
 					<p>{originData && originData.year}</p>
-				</div>
-			</div>
+					<p>{originData && originData.comment}</p>
+					<p>{originData && originData.review}</p>
+				</div>} */}
+				{originData && <BookDetail originData={originData} />}
+			</>
 		);
 	}
 };

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { BookDataContext } from '../App';
-import { BookEditor } from '../components/BookEditor';
+import { useParams, useNavigate } from 'react-router-dom';
+import { BookDataContext } from '../../App';
+import { BookEditor } from '../../components/BookEditor';
 
 const Edit = () => {
 	const [originData, setOriginData] = useState();
 	const { bookId } = useParams();
-
+	const navigate = useNavigate();
 	const bookData = useContext(BookDataContext);
 
 	// id 조회
@@ -14,7 +14,6 @@ const Edit = () => {
 		if (bookData.length >= 1) {
 			// 데이터 있을 경우
 			const targetBook = bookData.find((book) => book.docID === bookId);
-
 			if (targetBook) {
 				setOriginData(targetBook);
 			}
@@ -26,9 +25,7 @@ const Edit = () => {
 	}, [bookId, bookData]);
 
 	return (
-		<div>
-			{originData && <BookEditor originData={originData} isEdit={true} />}
-		</div>
+		<>{originData && <BookEditor originData={originData} isEdit={true} />}</>
 	);
 };
 
