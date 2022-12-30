@@ -22,7 +22,7 @@ const StyledButton = styled.button`
 	cursor: pointer;
 	border: 1px solid ${COLORS.pink};
 	font-size: ${FONT_SIZE.small};
-	height: 32px;
+	height: 48px;
 
 	${({ btnType }) => `
     background: ${btnType === 'primary' ? COLORS.pink : COLORS.background};
@@ -42,13 +42,13 @@ const StyledButton = styled.button`
 	}
 
 	@media ${MEDIA.md} {
-		height: 48px;
+		height: 56;
 		font-size: ${FONT_SIZE.medium};
 	}
 `;
 
 const defaultProps = {
-	colorType: 'main',
+	colorType: 'primary',
 };
 
 Button.defaultProps = defaultProps;
