@@ -11,9 +11,8 @@ import {
 import { db } from './utils/firebase';
 import './App.css';
 
-import { Container } from 'common';
-
 import Root from './pages/Root';
+import { Container } from 'components';
 import { Home, New, Edit, Book } from './pages';
 
 export const BookDataContext = React.createContext();

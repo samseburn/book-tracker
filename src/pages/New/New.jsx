@@ -1,4 +1,4 @@
-import { BookEditor } from 'components/BookEditor';
+import { BookEditor } from 'components';
 
 const New = () => {
 	return (

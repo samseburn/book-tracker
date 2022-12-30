@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BookDataContext } from '../../App';
-import { BookEditor } from '../../components/BookEditor';
+import { BookEditor } from 'components';
 
 const Edit = () => {
 	const [originData, setOriginData] = useState();

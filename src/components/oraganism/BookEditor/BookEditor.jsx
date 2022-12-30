@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BookDispatchContext } from 'App';
-import { Button, FormInput, Input, Label } from 'components';
+import { Button, Input, Label } from 'components';
+import { FormInput } from 'components';
 import { MEDIA } from 'styles';
 
 const BookEditor = (props) => {

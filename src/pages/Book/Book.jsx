@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BookDataContext, BookDispatchContext } from '../../App';
-import { Button } from '../../components/atoms/Button';
-import { BookDetail } from '../../components/BookDetail';
+import { BookDataContext, BookDispatchContext } from 'App';
+import { Button, BookDetail } from 'components';
 
 const Book = () => {
 	const navigate = useNavigate();

@@ -1,30 +1,28 @@
-import React from 'react';
-import BookItem from './BookItem';
+import { BookItem } from 'components';
 
-const BookList = props => {
+const BookList = (props) => {
 	const { bookData } = props;
 	return (
-		<table border={1}>
+		<table className="booklist">
 			<thead>
 				<tr>
-					<th scope={'col'}>순번</th>
-					<th scope={'col'}>책 제목</th>
+					<th scope={'col'}>Title</th>
 					<th scope={'col'}>지은이</th>
 					<th scope={'col'}>출판사</th>
 					<th scope={'col'}>출판년도</th>
+					<th scope={'col'}>한줄리뷰</th>
 					<th scope={'col'}>상세보기</th>
 				</tr>
 			</thead>
 			<tbody>
-				{bookData.map(book => (
+				{bookData.map((book) => (
 					<BookItem
 						key={book.docID}
-						id={book.id}
 						title={book.title}
-						mnb
 						author={book.author}
 						publisher={book.publisher}
 						year={book.year}
+						comment={book.comment}
 						docID={book.docID}
 					/>
 				))}
