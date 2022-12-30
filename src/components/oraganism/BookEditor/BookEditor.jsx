@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -6,6 +6,7 @@ import { BookDispatchContext } from 'App';
 import { Button, Input, Label } from 'components';
 import { FormInput } from 'components';
 import { MEDIA } from 'styles';
+import { Controller, useForm } from 'react-hook-form'; // react-hook-form
 
 const BookEditor = (props) => {
 	const { originData, isEdit } = props;
@@ -23,12 +24,30 @@ const BookEditor = (props) => {
 	};
 	const [book, setBook] = useState(resetData);
 
-	// 데이터 생성 하기
-	const handleContentChange = (e) => {
-		setBook({ ...book, [e.target.name]: e.target.value });
-	};
+	const {
+		register,
+		watch,
+		handleSubmit,
+		formState: { isSubmitting, isDirty, errors },
+	} = useForm({
+		defaultValues: useMemo(() => {
+			if (isEdit) {
+				return {
+					title: originData.title,
+					author: originData.author,
+					publisher: originData.publisher,
+					year: originData.year,
+					date: originData.date,
+					comment: originData.comment,
+					review: originData.review,
+				};
+			}
+			return resetData;
+		}),
+	});
 
-	const handleSubmit = (e) => {
+	// register 객체 확인
+	const onValid = (book) => {
 		if (
 			window.confirm(
 				isEdit
@@ -45,23 +64,53 @@ const BookEditor = (props) => {
 		}
 	};
 
-	useEffect(() => {
-		if (isEdit) {
-			setBook({
-				title: originData.title,
-				author: originData.author,
-				publisher: originData.publisher,
-				year: originData.year,
-				date: originData.date,
-				comment: originData.comment,
-				review: originData.review,
-			});
-		}
-	}, [isEdit, originData]);
+	const onInvalid = (data) => console.log(data, 'invalid');
+
+	// watch로 input 값 변경 감지
+	console.log(watch());
+
+	// react-hook-form error
+	console.log(errors);
+
+	// 데이터 생성 하기
+	// const handleContentChange = (e) => {
+	// 	// setBook({ ...book, [e.target.name]: e.target.value });
+	// };
+
+	// const handleSubmit = (e) => {
+	// 	if (
+	// 		window.confirm(
+	// 			isEdit
+	// 				? '독서 정보를 수정하시겠습니까?'
+	// 				: '새로운 독서 정보를 만드시겠습니까?',
+	// 		)
+	// 	) {
+	// 		if (!isEdit) {
+	// 			onCreate(book);
+	// 		} else {
+	// 			onEdit(bookId, book);
+	// 		}
+	// 		navigate('/', { replace: true });
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	if (isEdit) {
+	// 		setBook({
+	// 			title: originData.title,
+	// 			author: originData.author,
+	// 			publisher: originData.publisher,
+	// 			year: originData.year,
+	// 			date: originData.date,
+	// 			comment: originData.comment,
+	// 			review: originData.review,
+	// 		});
+	// 	}
+	// }, [isEdit, originData]);
 
 	return (
 		<BookEditorWrapper>
-			<Form onSubmit={handleSubmit}>
+			<Form onSubmit={handleSubmit(onValid, onInvalid)}>
 				<Title>{isEdit ? '책 정보 수정하기' : '새로운 책 등록하기'}</Title>
 
 				<FormInputWrapper>
@@ -70,9 +119,13 @@ const BookEditor = (props) => {
 						rightChild={
 							<Input
 								type={'text'}
-								name={'title'}
-								value={book.title}
-								onChange={handleContentChange}
+								// name={'title'}
+								// value={book.title}
+								// onChange={handleContentChange}
+								{...register('title', {
+									required: '책 제목을 입력해주세요',
+									minLength: 1,
+								})}
 							/>
 						}
 					/>
@@ -81,9 +134,16 @@ const BookEditor = (props) => {
 						rightChild={
 							<Input
 								type={'text'}
-								name={'author'}
-								value={book.author}
-								onChange={handleContentChange}
+								// name={'author'}
+								// value={book.author}
+								// onChange={handleContentChange}
+								{...register('author', {
+									required: true,
+									minLength: {
+										value: 1,
+										message: '최소 1글자 이상 입력해주세요.',
+									},
+								})}
 							/>
 						}
 					/>
@@ -92,9 +152,10 @@ const BookEditor = (props) => {
 						rightChild={
 							<Input
 								type={'text'}
-								name={'publisher'}
-								value={book.publisher}
-								onChange={handleContentChange}
+								// name={'publisher'}
+								// value={book.publisher}
+								// onChange={handleContentChange}
+								{...register('publisher', { required: true })}
 							/>
 						}
 					/>
@@ -103,9 +164,10 @@ const BookEditor = (props) => {
 						rightChild={
 							<Input
 								type={'text'}
-								name={'year'}
-								value={book.year}
-								onChange={handleContentChange}
+								// name={'year'}
+								// value={book.year}
+								// onChange={handleContentChange}
+								{...register('year', { required: true })}
 							/>
 						}
 					/>
@@ -114,9 +176,10 @@ const BookEditor = (props) => {
 						rightChild={
 							<Input
 								type={'text'}
-								name={'comment'}
-								value={book.comment}
-								onChange={handleContentChange}
+								// name={'comment'}
+								// value={book.comment}
+								// onChange={handleContentChange}
+								{...register('comment', { required: true })}
 							/>
 						}
 					/>
@@ -134,10 +197,16 @@ const BookEditor = (props) => {
 									outline: 'none',
 									resize: 'none',
 								}}
-								name={'review'}
-								value={book.review}
-								wrap={'hard'}
-								onChange={handleContentChange}
+								// name={'review'}
+								// value={book.review}
+								// onChange={handleContentChange}
+								{...register('review', {
+									required: 'review error',
+									minLength: {
+										value: 10,
+										message: '최소 10자 이상 입력해주세요. ',
+									},
+								})}
 							/>
 						}
 					/>
@@ -146,9 +215,10 @@ const BookEditor = (props) => {
 						rightChild={
 							<Input
 								type={'date'}
-								name={'date'}
-								value={book.date}
-								onChange={handleContentChange}
+								// name={'date'}
+								// value={book.date}
+								// onChange={handleContentChange}
+								{...register('date', { required: true })}
 							/>
 						}
 					/>
@@ -169,12 +239,13 @@ const BookEditor = (props) => {
 
 const Title = styled.h1`
 	width: 100%;
-	padding: 20px 0;
+	/* padding: 20px 0; */
 	text-align: center;
 	font-size: 18px;
 	line-height: 1.625;
 	font-weight: 500;
-	border-bottom: 1px solid gray;
+	margin: 10px 0 12px;
+	/* border-bottom: 1px solid gray; */
 `;
 
 const ButtonWrapper = styled.div`
@@ -186,18 +257,18 @@ const ButtonWrapper = styled.div`
 
 const FormInputWrapper = styled.div`
 	padding: 20px;
+	margin-bottom: 40px;
 `;
 
 const Form = styled.form`
 	width: 100%;
-	background-color: snow;
-	border: 1px solid gray;
-	border-radius: 12px;
+	/* background-color: snow; */
+	/* border: 1px solid gray; */
+	/* border-radius: 12px; */
 	overflow: hidden;
 `;
 
 const BookEditorWrapper = styled.div`
-	width: 90%;
 	margin: 0 auto;
 	display: flex;
 	justify-content: center;
