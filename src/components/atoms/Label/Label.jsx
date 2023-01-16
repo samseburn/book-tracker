@@ -9,14 +9,15 @@ const StyledLabel = styled.label`
 	display: block;
 	flex-shrink: 0;
 	color: ${COLORS.dark};
-	/* font-size: ${FONT_SIZE.base}; */
 	font-size: ${FONT_SIZE.small};
 	font-weight: ${FONT_WEIGHT.regular};
-	/* border: 1px solid gray; */
+	color: ${COLORS.tertiary};
 	min-width: 72px;
+	margin-bottom: 10px;
 
 	@media ${MEDIA.md} {
 		font-size: ${FONT_SIZE.base};
+		margin-bottom: 0;
 	}
 `;
 

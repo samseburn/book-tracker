@@ -7,15 +7,21 @@ const Input = styled.input`
 	width: 100%;
 	height: 32px;
 	color: ${COLORS.primary};
-	background-color: ${COLORS.white};
-	border: 1px solid gray;
+	/* border-bottom: 1px solid gray; */
 
 	&:focus {
-		border: 1px solid ${COLORS.primary};
+		/* border-bottom: 1px sol id ${COLORS.border}; */
+
+		&:not(:focus-visible) {
+			outline: 0;
+		}
 	}
 
 	&[type='date'] {
 		position: relative;
+		&:focus {
+			border: none;
+		}
 		// text-align: center;
 
 		&::-webkit-calendar-picker-indicator {

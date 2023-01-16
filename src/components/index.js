@@ -2,6 +2,7 @@
 export { Button } from './atoms/Button';
 export { Input } from './atoms/Input';
 export { Label } from './atoms/Label';
+export { Textarea } from './atoms/Textarea';
 
 // Molecule Compoenent
 export { FormInput } from './molecule/FormInput';

@@ -1,12 +1,14 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BookDispatchContext } from 'App';
-import { Button, Input, Label } from 'components';
+import { Button, Input, Label, Textarea } from 'components';
 import { FormInput } from 'components';
-import { MEDIA } from 'styles';
-import { Controller, useForm } from 'react-hook-form'; // react-hook-form
+import { COLORS, MEDIA } from 'styles';
+import { useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { bookRecoilData } from 'recoil/atom';
 
 const BookEditor = (props) => {
 	const { originData, isEdit } = props;
@@ -23,6 +25,7 @@ const BookEditor = (props) => {
 		review: '',
 	};
 	const [book, setBook] = useState(resetData);
+	const [bookItemData, setBookItemData] = useRecoilState(bookRecoilData);
 
 	const {
 		register,
@@ -46,6 +49,20 @@ const BookEditor = (props) => {
 		}),
 	});
 
+	// @@ recoil
+	// useEffect(() => {
+	// 	console.log('책: ', bookItemData);
+	// 	setBookItemData({
+	// 		title: book.title,
+	// 		author: book.author,
+	// 		publisher: book.publisher,
+	// 		year: book.year,
+	// 		date: book.date,
+	// 		comment: book.comment,
+	// 		review: book.review,
+	// 	});
+	// }, []);
+
 	// register 객체 확인
 	const onValid = (book) => {
 		if (
@@ -57,6 +74,15 @@ const BookEditor = (props) => {
 		) {
 			if (!isEdit) {
 				onCreate(book);
+				setBookItemData({
+					title: book.title,
+					author: book.author,
+					publisher: book.publisher,
+					year: book.year,
+					date: book.date,
+					comment: book.comment,
+					review: book.review,
+				});
 			} else {
 				onEdit(bookId, book);
 			}
@@ -67,7 +93,7 @@ const BookEditor = (props) => {
 	const onInvalid = (data) => console.log(data, 'invalid');
 
 	// watch로 input 값 변경 감지
-	console.log(watch());
+	// console.log(watch());
 
 	// react-hook-form error
 	console.log(errors);
@@ -122,13 +148,20 @@ const BookEditor = (props) => {
 								// name={'title'}
 								// value={book.title}
 								// onChange={handleContentChange}
+								aria-invalid={
+									!isDirty ? undefined : errors.title ? 'true' : 'false'
+								}
 								{...register('title', {
 									required: '책 제목을 입력해주세요',
 									minLength: 1,
 								})}
 							/>
 						}
+						bottomChild={
+							errors.title && <Small role="alert">{errors.title.message}</Small>
+						}
 					/>
+
 					<FormInput
 						leftChild={<Label text={'저자'} />}
 						rightChild={
@@ -137,14 +170,22 @@ const BookEditor = (props) => {
 								// name={'author'}
 								// value={book.author}
 								// onChange={handleContentChange}
+								aria-invalid={
+									!isDirty ? undefined : errors.author ? 'true' : 'false'
+								}
 								{...register('author', {
-									required: true,
+									required: '저자를 입력해주세요.',
 									minLength: {
 										value: 1,
 										message: '최소 1글자 이상 입력해주세요.',
 									},
 								})}
 							/>
+						}
+						bottomChild={
+							errors.author && (
+								<Small role="alert">{errors.author.message}</Small>
+							)
 						}
 					/>
 					<FormInput
@@ -155,8 +196,19 @@ const BookEditor = (props) => {
 								// name={'publisher'}
 								// value={book.publisher}
 								// onChange={handleContentChange}
-								{...register('publisher', { required: true })}
+								{...register('publisher', {
+									required: '출판사를 입력해주세요.',
+									minLength: {
+										value: 1,
+										message: '최소 1글자 이상 입력해주세요.',
+									},
+								})}
 							/>
+						}
+						bottomChild={
+							errors.publisher && (
+								<Small role="alert">{errors.publisher.message}</Small>
+							)
 						}
 					/>
 					<FormInput
@@ -167,10 +219,17 @@ const BookEditor = (props) => {
 								// name={'year'}
 								// value={book.year}
 								// onChange={handleContentChange}
-								{...register('year', { required: true })}
+								{...register('year', {
+									required: '발행년도를 입력해주세요.',
+									minLength: {
+										value: 1,
+										message: '최소 1글자 이상 입력해주세요.',
+									},
+								})}
 							/>
 						}
 					/>
+					{errors.year && <Small role="alert">{errors.year.message}</Small>}
 					<FormInput
 						leftChild={<Label text={'한줄평'} />}
 						rightChild={
@@ -179,29 +238,25 @@ const BookEditor = (props) => {
 								// name={'comment'}
 								// value={book.comment}
 								// onChange={handleContentChange}
-								{...register('comment', { required: true })}
+								{...register('comment', { required: '한줄평을 입력해주세요.' })}
 							/>
 						}
+						bottomChild={
+							errors.comment && (
+								<Small role="alert">{errors.comment.message}</Small>
+							)
+						}
 					/>
+
 					<FormInput
 						leftChild={<Label text={'메모'} />}
 						rightChild={
-							<textarea
-								style={{
-									background: 'white',
-									width: '100%',
-									height: '100px',
-									padding: '4px 16px',
-									whiteSpace: 'wrap',
-									border: '1px solid gray',
-									outline: 'none',
-									resize: 'none',
-								}}
+							<Textarea
 								// name={'review'}
 								// value={book.review}
 								// onChange={handleContentChange}
 								{...register('review', {
-									required: 'review error',
+									required: '리뷰를 최소 10자 이상 입력해주세요.',
 									minLength: {
 										value: 10,
 										message: '최소 10자 이상 입력해주세요. ',
@@ -209,7 +264,13 @@ const BookEditor = (props) => {
 								})}
 							/>
 						}
+						bottomChild={
+							errors.review && (
+								<Small role="alert">{errors.review.message}</Small>
+							)
+						}
 					/>
+
 					<FormInput
 						leftChild={<Label text={'등록날짜'} />}
 						rightChild={
@@ -218,8 +279,11 @@ const BookEditor = (props) => {
 								// name={'date'}
 								// value={book.date}
 								// onChange={handleContentChange}
-								{...register('date', { required: true })}
+								{...register('date', { required: '등록 날짜를 설정해주세요.' })}
 							/>
+						}
+						bottomChild={
+							errors.date && <Small role="alert">{errors.date.message}</Small>
 						}
 					/>
 				</FormInputWrapper>
@@ -258,6 +322,9 @@ const ButtonWrapper = styled.div`
 const FormInputWrapper = styled.div`
 	padding: 20px;
 	margin-bottom: 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 const Form = styled.form`
@@ -278,6 +345,13 @@ const BookEditorWrapper = styled.div`
 		width: 75%;
 		max-width: 700px;
 	}
+`;
+
+const Small = styled.small`
+	display: block;
+	color: ${COLORS.red};
+	font-size: 12px;
+	text-align: center;
 `;
 
 export default BookEditor;
