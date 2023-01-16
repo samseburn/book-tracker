@@ -14,6 +14,7 @@ import './App.css';
 import Root from './pages/Root';
 import { Container } from 'components';
 import { Home, New, Edit, Book } from './pages';
+import { RecoilRoot } from 'recoil';
 
 export const BookDataContext = React.createContext();
 export const BookDispatchContext = React.createContext();
@@ -114,11 +115,13 @@ function App() {
 	}, []);
 
 	return (
-		<BookDataContext.Provider value={bookData}>
-			<BookDispatchContext.Provider value={memoizedDispatches}>
-				<RouterProvider router={router} />
-			</BookDispatchContext.Provider>
-		</BookDataContext.Provider>
+		<RecoilRoot>
+			<BookDataContext.Provider value={bookData}>
+				<BookDispatchContext.Provider value={memoizedDispatches}>
+					<RouterProvider router={router} />
+				</BookDispatchContext.Provider>
+			</BookDataContext.Provider>
+		</RecoilRoot>
 	);
 }
 
