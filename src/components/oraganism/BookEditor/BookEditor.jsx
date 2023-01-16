@@ -3,8 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BookDispatchContext } from 'App';
-import { Button, Input, Label, Textarea } from 'components';
-import { FormInput } from 'components';
+import { Button, Input, Label, Textarea, FormInput } from 'components';
 import { COLORS, MEDIA } from 'styles';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
