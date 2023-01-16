@@ -1,13 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { BookDataContext } from 'App';
 import { Button, BookList } from 'components';
 import LoginForm from 'components/LoginForm/LoginForm';
+import { getRecoilBookData } from 'recoil/selector';
+import { useRecoilValue } from 'recoil';
 
 const Home = () => {
 	const navigate = useNavigate();
 	const bookData = useContext(BookDataContext);
 
+	const bookDataValue = useRecoilValue(getRecoilBookData);
+
+	useEffect(() => {
+		console.log('recoil@bookDataValue: ', bookDataValue);
+	}, []);
 	const goNew = () => {
 		navigate(`/new`);
 	};

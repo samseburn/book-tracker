@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'components';
 import styled from 'styled-components';
-import { FONT_SIZE, FONT_WEIGHT } from 'styles';
+import { COLORS, FONT_SIZE, FONT_WEIGHT } from 'styles';
 
 const BookItem = (props) => {
 	const navigate = useNavigate();
@@ -12,12 +12,7 @@ const BookItem = (props) => {
 	};
 
 	return (
-		<div
-			style={{
-				marginBottom: 100,
-				padding: '20px',
-			}}
-		>
+		<div style={{ margin: '10px' }}>
 			<BookDataWrapper>
 				<p>{review}</p>
 
@@ -38,16 +33,20 @@ const BookItem = (props) => {
 
 const BookDataWrapper = styled.div`
 	width: 100%;
-	padding: 20px 12px;
+	padding: 32px 24px;
+	background-color: ${COLORS.pink};
+	color: ${COLORS.white};
+	border-radius: 16px;
+
 	p {
 		display: inline-flex;
 		width: 100%;
 		font-size: 17px;
 		font-weight: ${FONT_WEIGHT.medium};
 		line-height: 1.625;
+		margin-bottom: 50px;
 		/* text-align: justify; */
 		/* word-break: keep-all; */
-		margin-bottom: 50px;
 		white-space: pre-line;
 	}
 
