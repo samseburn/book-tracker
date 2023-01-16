@@ -1,10 +1,14 @@
 import React from 'react';
 import './BookDetail.scss';
+import { COLORS } from 'styles';
 
 const BookDetail = ({ originData }) => {
 	return (
 		<>
-			<div className="bookDetail">
+			<div
+				className="bookDetail"
+				style={{ backgroundColor: `${COLORS.background}` }}
+			>
 				<div className="info-group">
 					<dl className="info-list">
 						<div className="info-item">

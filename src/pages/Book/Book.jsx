@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { BookDataContext, BookDispatchContext } from 'App';
 import { Button, BookDetail } from 'components';
 
@@ -37,12 +38,17 @@ const Book = () => {
 	} else {
 		return (
 			<>
-				<div style={{ width: '100%', display: 'flex' }}>
-					<Button type={'main'} onClick={goEdit}>
-						수정하기
+				<ButtonWrapper>
+					<Button
+						type={'button'}
+						text={'수정하기'}
+						onClick={goEdit}
+						btnType={'primary'}
+					></Button>
+					<Button type={'button'} text={'삭제하기'} onClick={handleRemove}>
+						삭제하기
 					</Button>
-					<Button onClick={handleRemove}>삭제하기</Button>
-				</div>
+				</ButtonWrapper>
 				{/* {<div className="bookDetail">
 					<p>{originData && originData.title}</p>
 					<p>{originData && originData.author}</p>
@@ -56,5 +62,12 @@ const Book = () => {
 		);
 	}
 };
+
+const ButtonWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	gap: 10px;
+	margin-bottom: 50px;
+`;
 
 export default Book;
