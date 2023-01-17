@@ -5,8 +5,8 @@ export { Label } from './atoms/Label';
 export { Textarea } from './atoms/Textarea';
 
 // Molecule Compoenent
-export { FormInput } from './molecule/FormInput';
 export { BookItem } from './molecule/BookItem';
+export { FormInput } from './molecule/FormInput';
 
 // Organism Compoenent
 export { BookEditor } from './oraganism/BookEditor';
