@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { BookDataContext } from '../../App';
+import { BookDataContext } from 'App';
 import { BookEditor } from 'components';
 
 const Edit = () => {
