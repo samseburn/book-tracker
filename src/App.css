@@ -33,3 +33,84 @@ header a {
 	margin-top: 20px;
 	gap: 20px;
 }
+
+.bookDetail {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	border-radius: 20px;
+	padding: 40px;
+	background: white;
+	flex-shrink: 0;
+}
+
+/* // .bookDetail .info-group {
+// 	border: 1px solid black;
+// 	border-radius: 12px;
+// 	padding: 20px;
+// 	background: white;
+// 	flex-shrink: 0;
+// 	height: 60vh;
+// } */
+
+.review {
+	max-height: 500px;
+	overflow: scroll;
+}
+
+.review::-webkit-scrollbar {
+	display: none;
+}
+
+.review {
+	margin: 0;
+	width: 100%;
+	font-size: 1rem;
+	line-height: 1.625;
+	text-align: justify;
+	letter-spacing: -0.01em;
+	word-break: break-all;
+	font-weight: 400;
+	padding: 24px 20px;
+	border: 1px solid black;
+	border-top: none;
+}
+
+.review p {
+	white-space: pre-line;
+}
+
+.info-list {
+	width: 100%;
+}
+
+.info-item {
+	display: flex;
+	font-size: 14px;
+}
+
+dl {
+	border: 1px solid black;
+}
+
+dl > div:not(:last-child) {
+	display: flex;
+	width: 100%;
+	border-bottom: 1px solid black;
+}
+
+dt {
+	width: 20%;
+	padding: 5px 10px;
+	position: relative;
+	border-right: 1px solid black;
+	display: inline-flex;
+	justify-content: center;
+}
+
+dd {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 10px;
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-import './BookDetail.scss';
 import { COLORS } from 'styles';
 
 const BookDetail = ({ originData }) => {
